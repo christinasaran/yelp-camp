@@ -20,7 +20,11 @@ mongoose.connect("mongodb+srv://apple:apple@cluster0-m0j8p.mongodb.net/<dbname>?
   useNewUrlParser: true, 
   useCreateIndex: true,
   useUnifiedTopology: true 
-});
+}).then(() =>{
+  console.log("Connected to db");
+}).catch(err => {
+  console.log("error!!! ", err);
+})
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
