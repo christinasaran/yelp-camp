@@ -15,8 +15,10 @@ var commentRoutes = require("./routes/comments"),
     campgroundRoutes = require("./routes/campgrounds"),
     indexRoutes = require("./routes/index");
 
+console.log(process.env.DATABASEURL);
 //mongoose.connect("mongodb://localhost/yelp_camp", { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.connect("mongodb+srv://apple:apple@cluster0-m0j8p.mongodb.net/<dbname>?retryWrites=true&w=majority", { 
+// "mongodb+srv://apple:apple@cluster0-m0j8p.mongodb.net/<dbname>?retryWrites=true&w=majority"
+mongoose.connect(process.env.DATABASEURL, { 
   useNewUrlParser: true, 
   useCreateIndex: true,
   useUnifiedTopology: true 
