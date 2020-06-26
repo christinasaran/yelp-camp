@@ -18,7 +18,7 @@ var commentRoutes = require("./routes/comments"),
 console.log(process.env.DATABASEURL);
 //mongoose.connect("mongodb://localhost/yelp_camp", { useNewUrlParser: true, useUnifiedTopology: true });
 // "mongodb+srv://apple:apple@cluster0-m0j8p.mongodb.net/<dbname>?retryWrites=true&w=majority"
-mongoose.connect(process.env.DATABASEURL, { 
+mongoose.connect("mongodb://localhost/yelp_camp", { 
   useNewUrlParser: true, 
   useCreateIndex: true,
   useUnifiedTopology: true 
@@ -60,7 +60,7 @@ app.use("/campgrounds/:id/comments", commentRoutes); //sebd oarams
 app.use("/campgrounds", campgroundRoutes);
 
 //process.env.PORT  heroku
-app.listen(process.env.PORT, function () {
+app.listen(3000, function () {
     console.log("YelpCamp Server started...");
 });
 
