@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 var express = require("express"),
     app = express(),
     bodyParser = require("body-parser"),
@@ -65,3 +63,28 @@ app.use("/campgrounds", campgroundRoutes);
 app.listen(3000, function () {
     console.log("YelpCamp Server started...");
 });
+
+
+/**
+ *
+ *       //Campground pre-hook
+    const Comment = require('./comment');
+    campgroundSchema.pre("remove",async function(){
+       await Comment.deleteMany({
+          _id:{
+             $in:this.comments
+          }
+       });
+    });
+
+    //Delete/destroy Campground
+    router.delete("/:id",async(req,res)=>{
+      try {
+        let foundCampground = await Campground.findById(req.params.id);
+        await foundCampground.remove();
+        res.redirect("/campgrounds");
+      } catch (error) {
+        res.redirect("/campgrounds");
+      }
+    })
+ */
