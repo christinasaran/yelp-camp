@@ -2,10 +2,16 @@ var express = require("express");
 var router = express.Router();
 
 const Campground = require("../models/campground");
-const middleware = require("../middleware"); //require automaticall gets index
+let { checkCampgroundOwnership, isLoggedIn, isPaid }  = require("../middleware"); //require automaticall gets index
+router.use(isLoggedIn, isPaid);
 
 router.get("/", function (req, res) {
     console.log(req.user);
+
+    if(req.query.paid){
+        //local variable, handel by partial
+        res.locals.success = "payment success, welcome to YelpCamp";
+    }
     Campground.find({}, function (err, allCampgrounds) {
         if (err) {
             console.log(err);
@@ -16,7 +22,7 @@ router.get("/", function (req, res) {
 });
 
 //error message to login in middleware index
-router.post("/", middleware.isLoggedIn , function (req, res) {
+router.post("/", isLoggedIn , function (req, res) {
     //store data in arry
     var name = req.body.name;
     var price = req.body.price;
@@ -40,7 +46,7 @@ router.post("/", middleware.isLoggedIn , function (req, res) {
     });
 });
 
-router.get("/new", middleware.isLoggedIn, function (req, res) {
+router.get("/new", isLoggedIn, function (req, res) {
     res.render("campgrounds/new");
 });
 
@@ -55,14 +61,14 @@ router.get("/:id", function (req, res) {
 });
 
 //EDIT
-router.get("/:id/edit", middleware.checkCampgroundOwnership, function (req, res) {
+router.get("/:id/edit", checkCampgroundOwnership, function (req, res) {
 
     Campground.findById(req.params.id, function (err, campground) {
         res.render("campgrounds/edit", { campground: campground }); //views
     });
 });
 
-router.put("/:id", middleware.checkCampgroundOwnership, function (req, res) {
+router.put("/:id", checkCampgroundOwnership, function (req, res) {
     Campground.findByIdAndUpdate(req.params.id, req.body.campground, function (err, updated) {
         if (err) {
             res.redirect("/campgrounds");
@@ -73,7 +79,7 @@ router.put("/:id", middleware.checkCampgroundOwnership, function (req, res) {
 });
 
 //Delete  ASYNC TO COMMENTS TO DELETE.
-router.delete("/:id", middleware.checkCampgroundOwnership, async (req, res) => {
+router.delete("/:id", checkCampgroundOwnership, async (req, res) => {
     try {
         let foundCampground = await Campground.findById(req.params.id);
         await foundCampground.remove();
