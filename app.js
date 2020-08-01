@@ -20,7 +20,7 @@ var commentRoutes = require("./routes/comments"),
 //console.log(process.env.DATABASEURL);
 //mongoose.connect("mongodb://localhost/yelp_camp", { useNewUrlParser: true, useUnifiedTopology: true });
 // "mongodb+srv://apple:apple@cluster0-m0j8p.mongodb.net/<dbname>?retryWrites=true&w=majority"
-mongoose.connect("mongodb://localhost/yelp_camp", { 
+mongoose.connect(process.env.DATABASEURL, { 
   useNewUrlParser: true, 
   useCreateIndex: true,
   useUnifiedTopology: true 
