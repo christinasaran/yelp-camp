@@ -1,4 +1,4 @@
-require('dotenv').config();
+//require('dotenv').config(); //dev dep
 
 var express = require("express"),
     app = express(),
