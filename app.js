@@ -63,8 +63,8 @@ app.use(indexRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes); //sebd oarams
 app.use("/campgrounds", campgroundRoutes);
 
-//process.env.PORT  heroku
-app.listen(3000, function () {
+//process.env.PORT  heroku || 3000
+app.listen(process.env.PORT, function () {
     console.log("YelpCamp Server started...");
 });
 
